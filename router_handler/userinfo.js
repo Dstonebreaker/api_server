@@ -1,5 +1,7 @@
 const db = require('../db/index')
 
+const bcrypt = require('bcryptjs')
+
 
 // 获取用户基本信息的处理函数
 exports.getUserInfo = (req, res) => {
@@ -28,5 +30,18 @@ exports.updateUserInfo = (req, res) => {
 
 // 更新用户密码的处理函数
 exports.updatePassword = (req, res) => {
-    res.send('ok')
+    // 根据id查询用户信息
+    const sql = `select * from ev_users where id=?`
+    db.query(sql, req.user.id, (err, results) => {
+        if (err) return res.cc(err)
+        if (results.length !== 1) return res.cc('用户不存在')
+
+        // 判断密码是否正确
+        const compareResult = bcrypt.compareSync(req.body.oldPwd, results[0].password)
+        if (!compareResult) return res.cc('旧密码错误')
+
+        // TODO: 更新数据库中的密码
+        res.cc('ok', 0)
+    })
+
 }
