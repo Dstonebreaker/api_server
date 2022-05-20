@@ -41,7 +41,13 @@ exports.updatePassword = (req, res) => {
         if (!compareResult) return res.cc('旧密码错误')
 
         // TODO: 更新数据库中的密码
-        res.cc('ok', 0)
+        const sql = `update ev_users set password=? where id=?`
+        const newPwd = bcrypt.hashSync(req.body.newPwd, 10)
+        db.query(sql, [newPwd, req.user.id], (err, results) => {
+            if (err) return res.cc(err)
+            if (results.affectedRows !== 1) return res.cc('设置密码失败！')
+            res.cc('设置密码成功！', 0)
+        })
     })
 
 }
