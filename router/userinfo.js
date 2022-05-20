@@ -13,4 +13,7 @@ router.get('/userinfo', userinfo_handler.getUserInfo)
 // 更新用户的基本信息
 router.post('/userinfo', expressJoi(update_userinfo_schema), userinfo_handler.updateUserInfo)
 
+// 重置密码的路由
+router.post('/updatepwd', userinfo_handler.updatePassword)
+
 module.exports = router
