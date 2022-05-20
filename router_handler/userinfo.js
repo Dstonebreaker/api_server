@@ -16,6 +16,7 @@ exports.getUserInfo = (req, res) => {
     })
 }
 
+// 更新用户基本信息的处理函数
 exports.updateUserInfo = (req, res) => {
     const sql = `update ev_users set ? where id=?`
     db.query(sql, [req.body, req.body.id], (err, results) => {
@@ -25,6 +26,7 @@ exports.updateUserInfo = (req, res) => {
     })
 }
 
+// 更新用户密码的处理函数
 exports.updatePassword = (req, res) => {
     res.send('ok')
 }
