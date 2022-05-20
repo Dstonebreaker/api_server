@@ -49,5 +49,8 @@ exports.updatePassword = (req, res) => {
             res.cc('设置密码成功！', 0)
         })
     })
+}
 
+exports.updateAvatar = (req, res) => {
+    res.cc('ok', 0)
 }

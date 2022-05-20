@@ -16,4 +16,7 @@ router.post('/userinfo', expressJoi(update_userinfo_schema), userinfo_handler.up
 // 重置密码的路由
 router.post('/updatepwd', expressJoi(update_password_schema), userinfo_handler.updatePassword)
 
+// 更新用户头像的路由
+router.post('/update/avatar', userinfo_handler.updateAvatar)
+
 module.exports = router
