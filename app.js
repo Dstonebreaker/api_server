@@ -33,6 +33,10 @@ app.use('/api', userRouter)
 const userinfoRouter = require('./router/userinfo')
 app.use('/my', userinfoRouter)
 
+// 导入并使用文章分类模块
+const artCateRouter = require('./router/artcate')
+app.use('/my/article', artCateRouter)
+
 const joi = require('joi')
     // 定义错误级别的中间件
 app.use((err, req, res, next) => {
