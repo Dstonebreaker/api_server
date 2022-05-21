@@ -25,6 +25,9 @@ const config = require('./config')
 const expressJWT = require('express-jwt')
 app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/api\//] }))
 
+// 托管静态资源
+app.use(express.static('./uploads'))
+
 // 导入并使用用户路由模块
 const userRouter = require('./router/user')
 app.use('/api', userRouter)
@@ -35,10 +38,14 @@ app.use('/my', userinfoRouter)
 
 // 导入并使用文章分类模块
 const artCateRouter = require('./router/artcate')
-app.use('/my/article', artCateRouter)
+app.use('/my/artcate', artCateRouter)
 
+// 导入并使用文章管理模块
+const articleRouter = require('./router/article')
+app.use('/my/article', articleRouter)
+
+// 定义错误级别的中间件
 const joi = require('joi')
-    // 定义错误级别的中间件
 app.use((err, req, res, next) => {
     if (err instanceof joi.ValidationError) return res.cc(err)
     if (err.name === 'UnauthorizedError') return res.cc('身份认证失败！')
